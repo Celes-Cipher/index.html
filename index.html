@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TESTERPONTA | Ponta</title>
+
+<style>
+:root{
+  --bg:#07090f;
+  --panel:#0e121c;
+  --panel2:#131927;
+  --border:#252d40;
+  --text:#f2f5ff;
+  --muted:#8e99b2;
+  --cyan:#00e5ff;
+  --purple:#8b5cf6;
+  --green:#22c55e;
+  --red:#ef4444;
+  --yellow:#facc15;
+  --shadow:0 15px 45px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(0,229,255,.08),transparent 28%),
+    radial-gradient(circle at 85% 20%,rgba(139,92,246,.10),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,select,textarea{font:inherit}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+a{color:inherit;text-decoration:none}
+
+.app{min-height:100vh}
+
+.topbar{
+  height:72px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:0 28px;
+  background:rgba(7,9,15,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.logo{
+  min-width:210px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  font-size:20px;
+}
+
+.logo span{color:var(--cyan)}
+
+.search{
+  flex:1;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  height:44px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  outline:none;
+  padding:0 18px;
+  color:var(--text);
+  background:#0c1019;
+}
+
+.search input:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,229,255,.08);
+}
+
+.wallet{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 13px;
+  background:#101827;
+  border:1px solid var(--border);
+  border-radius:12px;
+  white-space:nowrap;
+}
+
+.coin{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#111;
+  font-weight:900;
+  background:linear-gradient(135deg,#ffe56b,#f59e0b);
+}
+
+.wallet small{display:block;color:var(--muted)}
+.wallet strong{color:#fff}
+
+.user-mini{
+  padding:10px 14px;
+  background:#101827;
+  border:1px solid var(--border);
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:235px 1fr;
+  min-height:calc(100vh - 72px);
+}
+
+.sidebar{
+  border-right:1px solid var(--border);
+  background:#090c13;
+  padding:22px 14px;
+}
+
+.side-title{
+  color:#66728d;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin:12px 12px 9px;
+}
+
+.nav-btn{
+  width:100%;
+  padding:12px 13px;
+  margin:3px 0;
+  border-radius:10px;
+  text-align:left;
+  color:#aeb8cd;
+  background:transparent;
+  transition:.2s;
+}
+
+.nav-btn:hover,.nav-btn.active{
+  color:#fff;
+  background:linear-gradient(90deg,rgba(0,229,255,.12),rgba(139,92,246,.08));
+}
+
+.nav-btn.active{
+  border-left:3px solid var(--cyan);
+}
+
+.main{
+  padding:30px;
+  max-width:1500px;
+  width:100%;
+  margin:auto;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.hero{
+  padding:45px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:
+    linear-gradient(110deg,rgba(0,229,255,.08),rgba(139,92,246,.09)),
+    #0c111b;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  right:-100px;
+  top:-120px;
+  background:rgba(0,229,255,.12);
+  filter:blur(40px);
+}
+
+.hero h1{
+  font-size:clamp(32px,5vw,60px);
+  line-height:1;
+  margin-bottom:18px;
+  position:relative;
+  z-index:2;
+}
+
+.gradient{
+  background:linear-gradient(90deg,var(--cyan),#7c3aed);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:680px;
+  color:#9ba7bd;
+  line-height:1.7;
+  margin-bottom:25px;
+  position:relative;
+  z-index:2;
+}
+
+.btn{
+  padding:11px 17px;
+  border-radius:10px;
+  color:#fff;
+  background:#171e2d;
+  border:1px solid var(--border);
+  transition:.2s;
+}
+
+.btn:hover{transform:translateY(-1px);border-color:#43506c}
+
+.btn.primary{
+  background:linear-gradient(135deg,#00bcd4,#6366f1);
+  border:0;
+  font-weight:700;
+}
+
+.btn.success{
+  background:rgba(34,197,94,.14);
+  color:#69f39a;
+  border:1px solid rgba(34,197,94,.25);
+}
+
+.btn.danger{
+  background:rgba(239,68,68,.12);
+  color:#ff7777;
+  border-color:rgba(239,68,68,.25);
+}
+
+.btn.small{
+  padding:8px 11px;
+  font-size:13px;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin:32px 0 16px;
+}
+
+.section-head h2{font-size:22px}
+
+.muted{color:var(--muted)}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-top:22px;
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:15px;
+}
+
+.stat .icon{font-size:24px;margin-bottom:12px}
+.stat strong{font-size:25px;display:block}
+.stat span{color:var(--muted);font-size:13px}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+}
+
+.product{
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  transition:.25s;
+}
+
+.product:hover{
+  transform:translateY(-5px);
+  border-color:#3b4967;
+  box-shadow:0 14px 35px rgba(0,0,0,.3);
+}
+
+.product-img{
+  height:160px;
+  display:grid;
+  place-items:center;
+  font-size:62px;
+  background:
+    linear-gradient(135deg,rgba(0,229,255,.10),rgba(139,92,246,.15)),
+    #111827;
+}
+
+.product-body{padding:16px}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:7px;
+  font-size:10px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.6px;
+  color:#9cefff;
+  background:rgba(0,229,255,.09);
+  margin-bottom:9px;
+}
+
+.product h3{
+  font-size:16px;
+  margin-bottom:7px;
+}
+
+.product p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  min-height:39px;
+}
+
+.price{
+  color:#ffe26d;
+  font-weight:800;
+  margin:13px 0;
+}
+
+.product-actions{
+  display:flex;
+  gap:8px;
+}
+
+.product-actions .btn{flex:1}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.profile{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+
+.avatar{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  font-size:25px;
+  font-weight:900;
+  color:#081019;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+}
+
+.role{
+  display:inline-block;
+  margin-top:5px;
+  color:#a7b1c7;
+  font-size:12px;
+}
+
+.form-group{margin-bottom:15px}
+
+.form-group label{
+  display:block;
+  color:#9ca8bd;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.form-control{
+  width:100%;
+  padding:12px 13px;
+  border-radius:10px;
+  color:#fff;
+  background:#0a0e16;
+  border:1px solid var(--border);
+  outline:none;
+}
+
+.form-control:focus{border-color:var(--cyan)}
+
+.table-wrap{overflow-x:auto}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,td{
+  text-align:left;
+  padding:14px 12px;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+
+th{
+  color:#74809a;
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+.status{
+  padding:5px 8px;
+  border-radius:6px;
+  background:rgba(34,197,94,.10);
+  color:#63eb91;
+  font-size:11px;
+}
+
+.empty{
+  padding:45px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.chat{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:200;
+}
+
+.chat-button{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  color:#001014;
+  background:linear-gradient(135deg,var(--cyan),#6366f1);
+  box-shadow:0 8px 30px rgba(0,229,255,.25);
+  font-size:23px;
+}
+
+.chat-box{
+  display:none;
+  width:330px;
+  height:450px;
+  margin-bottom:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#0b1019;
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
+
+.chat-box.open{display:flex;flex-direction:column}
+
+.chat-head{
+  padding:15px;
+  background:#111827;
+  border-bottom:1px solid var(--border);
+}
+
+.chat-head strong{display:block}
+.chat-head span{color:#62ef91;font-size:11px}
+
+.chat-messages{
+  flex:1;
+  padding:15px;
+  overflow-y:auto;
+}
+
+.message{
+  max-width:80%;
+  padding:9px 11px;
+  border-radius:10px;
+  margin-bottom:9px;
+  font-size:13px;
+  line-height:1.4;
+}
+
+.message.support{
+  background:#151d2c;
+  color:#bfc9dc;
+}
+
+.message.me{
+  margin-left:auto;
+  background:#16424b;
+  color:#d9fbff;
+}
+
+.chat-input{
+  display:flex;
+  gap:7px;
+  padding:10px;
+  border-top:1px solid var(--border);
+}
+
+.chat-input input{
+  flex:1;
+  min-width:0;
+  padding:10px;
+  border-radius:9px;
+  background:#080c13;
+  color:#fff;
+  border:1px solid var(--border);
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(7px);
+}
+
+.modal.open{display:flex}
+
+.modal-card{
+  width:min(550px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#0d121c;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.close{
+  background:#171d2a;
+  color:#aeb9cd;
+  width:34px;
+  height:34px;
+  border-radius:9px;
+}
+
+.auth{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 30% 30%,rgba(0,229,255,.08),transparent 30%),
+    #05070b;
+}
+
+.auth.hidden{display:none}
+
+.auth-card{
+  width:min(430px,100%);
+  background:#0d121b;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 25px 80px rgba(0,0,0,.55);
+}
+
+.auth-logo{
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+
+.auth-logo span{color:var(--cyan)}
+
+.auth-card > p{
+  color:var(--muted);
+  margin-bottom:25px;
+}
+
+.auth-switch{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:17px;
+}
+
+.link{
+  color:var(--cyan);
+  cursor:pointer;
+}
+
+.toast{
+  position:fixed;
+  right:20px;
+  top:90px;
+  z-index:800;
+  padding:13px 16px;
+  border:1px solid var(--border);
+  background:#111827;
+  color:#fff;
+  border-radius:10px;
+  box-shadow:var(--shadow);
+  transform:translateX(130%);
+  transition:.3s;
+}
+
+.toast.show{transform:translateX(0)}
+
+.admin-card{
+  border-left:3px solid var(--purple);
+}
+
+.role-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:15px;
+}
+
+.role-item{
+  padding:15px;
+  background:#101624;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.role-item strong{display:block;margin-bottom:5px}
+.role-item small{color:var(--muted);line-height:1.4}
+
+@media(max-width:1100px){
+  .products{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:auto;
+    z-index:90;
+    border-right:0;
+    border-top:1px solid var(--border);
+    padding:7px;
+  }
+  .side-title{display:none}
+  .sidebar nav{display:flex;overflow-x:auto}
+  .nav-btn{
+    min-width:max-content;
+    text-align:center;
+    font-size:11px;
+    padding:10px;
+  }
+  .main{padding:18px 15px 90px}
+  .topbar{padding:0 15px;gap:9px}
+  .logo{min-width:auto;font-size:16px}
+  .user-mini{display:none}
+  .wallet{font-size:11px}
+  .search{display:none}
+  .products{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+  .hero{padding:28px 22px}
+}
+
+@media(max-width:500px){
+  .products{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat strong{font-size:20px}
+  .chat-box{width:calc(100vw - 30px)}
+}
+</style>
+</head>
+
+<body>
+
+<div id="toast" class="toast"></div>
+
+<!-- AUTH -->
+<div id="authScreen" class="auth">
+  <div class="auth-card">
+    <div class="auth-logo">PONTA<span> / SHOP</span></div>
+    <p>TESTERPONTA — Gaming marketplace simulation</p>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Tên đăng nhập</label>
+        <input id="loginUser" class="form-control" required placeholder="Nhập tên đăng nhập">
+      </div>
+
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <input id="loginPass" type="password" class="form-control" required placeholder="Nhập mật khẩu">
+      </div>
+
+      <button class="btn primary" style="width:100%">Đăng nhập</button>
+    </form>
+
+    <div class="auth-switch">
+      Demo nhanh:
+      <span class="link" onclick="demoLogin('user')">User</span> ·
+      <span class="link" onclick="demoLogin('manager')">Manager</span> ·
+      <span class="link" onclick="demoLogin('support')">Support</span> ·
+      <span class="link" onclick="demoLogin('owner')">Owner</span>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app" style="display:none">
+
+<header class="topbar">
+  <div class="logo">TESTERPONTA<span> / PONTA</span></div>
+
+  <div class="search">
+    <input id="searchInput" oninput="renderProducts()" placeholder="🔎 Tìm vật phẩm, tài khoản game...">
+  </div>
+
+  <div class="wallet">
+    <div class="coin">P</div>
+    <div>
+      <small>Số dư</small>
+      <strong id="headerBalance">0 P</strong>
+    </div>
+  </div>
+
+  <div class="user-mini" onclick="showPage('account')">
+    👤 <span id="headerUser">User</span>
+  </div>
+</header>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="side-title">Menu</div>
+  <nav>
+    <button class="nav-btn active" onclick="showPage('home')">⌂ Trang chủ</button>
+    <button class="nav-btn" onclick="showPage('shop')">◈ Shop</button>
+    <button class="nav-btn" onclick="showPage('wallet')">◉ Ví tiền ảo</button>
+    <button class="nav-btn" onclick="showPage('history')">◷ Lịch sử</button>
+    <button class="nav-btn" onclick="showPage('account')">♙ Tài khoản</button>
+    <button class="nav-btn" onclick="showPage('support')">✉ Hỗ trợ</button>
+    <button id="adminNav" class="nav-btn" onclick="showPage('admin')" style="display:none">⚙ Quản trị</button>
+    <button class="nav-btn" onclick="logout()">↪ Đăng xuất</button>
+  </nav>
+</aside>
+
+<main class="main">
+
+<!-- HOME -->
+<section id="home" class="page active">
+  <div class="hero">
+    <h1>ENTER THE <span class="gradient">PONTA</span><br>GAME MARKET</h1>
+    <p>
+      Marketplace mô phỏng dành cho vật phẩm game và tài khoản game.
+      Khám phá kho sản phẩm, sử dụng tiền ảo nội bộ và quản lý lịch sử giao dịch của bạn.
+    </p>
+    <button class="btn primary" onclick="showPage('shop')">Khám phá Shop →</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="icon">◈</div>
+      <strong id="statProducts">0</strong>
+      <span>Sản phẩm</span>
+    </div>
+    <div class="stat">
+      <div class="icon">◉</div>
+      <strong id="statBalance">0 P</strong>
+      <span>Số dư của bạn</span>
+    </div>
+    <div class="stat">
+      <div class="icon">◷</div>
+      <strong id="statOrders">0</strong>
+      <span>Giao dịch</span>
+    </div>
+    <div class="stat">
+      <div class="icon">◆</div>
+      <strong>4</strong>
+      <span>Cấp quyền</span>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Sản phẩm nổi bật</h2>
+    <button class="btn small" onclick="showPage('shop')">Xem tất cả</button>
+  </div>
+
+  <div id="featuredProducts" class="products"></div>
+</section>
+
+<!-- SHOP -->
+<section id="shop" class="page">
+  <div class="section-head">
+    <div>
+      <h2>Ponta Game Shop</h2>
+      <p class="muted">Vật phẩm và tài khoản game mô phỏng</p>
+    </div>
+    <select id="categoryFilter" class="form-control" style="width:180px" onchange="renderProducts()">
+      <option value="all">Tất cả</option>
+      <option value="weapon">Vũ khí</option>
+      <option value="account">Tài khoản</option>
+    </select>
+  </div>
+
+  <div id="products" class="products"></div>
+</section>
+
+<!-- WALLET -->
+<section id="wallet" class="page">
+  <div class="section-head">
+    <div>
+      <h2>Ví tiền ảo</h2>
+      <p class="muted">Số dư dùng cho mô phỏng giao dịch trong website</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <p class="muted">Số dư hiện tại</p>
+      <h1 style="font-size:42px;margin:10px 0;color:#ffe26d" id="walletBalance">0 P</h1>
+      <p class="muted">Ponta Coins</p>
+
+      <div style="margin-top:25px">
+        <button class="btn primary" onclick="openTopup()">+ Nạp tiền ảo</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Thông tin ví</h3>
+      <div style="margin-top:18px;line-height:2;color:#aeb8cd">
+        <div>Trạng thái: <span class="status">Đang hoạt động</span></div>
+        <div>Loại tiền: <b style="color:#fff">Ponta Coin (P)</b></div>
+        <div>Thanh toán: <b style="color:#fff">Mô phỏng</b></div>
+        <div>Tiền thật: <b style="color:#ff8b8b">Không hỗ trợ</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="page">
+  <div class="section-head">
+    <div>
+      <h2>Lịch sử giao dịch</h2>
+      <p class="muted">Các giao dịch của tài khoản hiện tại</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div id="historyTable" class="table-wrap"></div>
+  </div>
+</section>
+
+<!-- ACCOUNT -->
+<section id="account" class="page">
+  <div class="section-head">
+    <div>
+      <h2>Tài khoản cá nhân</h2>
+      <p class="muted">Quản lý thông tin và bảo mật</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="profile">
+        <div class="avatar" id="profileAvatar">P</div>
+        <div>
+          <h3 id="profileName">User</h3>
+          <span class="role" id="profileRole">Người dùng</span>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <div class="form-group">
+          <label>Ngày / tháng / năm sinh</label>
+          <input id="birthDate" type="date" class="form-control">
+        </div>
+
+        <button class="btn primary" onclick="saveProfile()">Lưu thông tin</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Bảo mật</h3>
+
+      <div style="margin-top:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <div>
+            <b>Xác thực 2 bước</b>
+            <p class="muted" style="font-size:12px;margin-top:4px">
+              Mô phỏng trạng thái 2FA
+            </p>
+          </div>
+          <button id="twoFAButton" class="btn small" onclick="toggle2FA()">Đang tắt</button>
+        </div>
+
+        <hr style="border-color:var(--border);margin:15px 0">
+
+        <h4 style="margin-bottom:14px">Thay đổi mật khẩu</h4>
+
+        <div class="form-group">
+          <label>Mật khẩu hiện tại</label>
+          <input id="oldPass" type="password" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label>Mật khẩu mới</label>
+          <input id="newPass" type="password" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label>Xác nhận mật khẩu mới</label>
+          <input id="confirmPass" type="password" class="form-control">
+        </div>
+
+        <button class="btn primary" onclick="changePassword()">Đồng ý thay đổi</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section id="support" class="page">
+  <div class="section-head">
+    <div>
+      <h2>Trung tâm hỗ trợ</h2>
+      <p class="muted">Kết nối với đội ngũ hỗ trợ Ponta</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>💬 Bạn cần hỗ trợ?</h3>
+    <p class="muted" style="margin:10px 0 20px">
+      Sử dụng hộp chat ở góc dưới màn hình để gửi tin nhắn mô phỏng tới Support.
+    </p>
+    <button class="btn primary" onclick="toggleChat()">Mở Chat</button>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section id="admin" class="page">
+  <div class="section-head">
+    <div>
+      <h2>Admin Dashboard</h2>
+      <p class="muted">Khu vực quản trị theo cấp quyền</p>
+    </div>
+  </div>
+
+  <div id="adminContent"></div>
+</section>
+
+</main>
+</div>
+</div>
+
+<!-- CHAT -->
+<div class="chat">
+  <div id="chatBox" class="chat-box">
+    <div class="chat-head">
+      <strong>Ponta Support</strong>
+      <span>● Đang trực tuyến</span>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+      <div class="message support">
+        Xin chào! Ponta Support có thể giúp gì cho bạn?
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Nhập tin nhắn...">
+      <button class="btn primary small" onclick="sendMessage()">Gửi</button>
+    </div>
+  </div>
+
+  <button class="chat-button" onclick="toggleChat()">💬</button>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div id="productModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 id="modalTitle">Sản phẩm</h2>
+      <button class="close" onclick="closeModal('productModal')">×</button>
+    </div>
+
+    <div id="modalProduct"></div>
+  </div>
+</div>
+
+<!-- TOPUP MODAL -->
+<div id="topupModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>Nạp Ponta Coin</h2>
+      <button class="close" onclick="closeModal('topupModal')">×</button>
+    </div>
+
+    <p class="muted" style="margin-bottom:20px">
+      Đây chỉ là chức năng nạp tiền ảo mô phỏng.
+      Không có giao dịch tiền thật.
+    </p>
+
+    <div class="form-group">
+      <label>Số Ponta Coin muốn nạp</label>
+      <input id="topupAmount" type="number" min="1" class="form-control" value="1000">
+    </div>
+
+    <button class="btn primary" onclick="topup()">Xác nhận nạp</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   TESTERPONTA / PONTA
+   Single-file frontend simulation
+   ========================================================= */
+
+const DEFAULT_PRODUCTS = [
+  {
+    id:1,
+    name:"Aether Edge",
+    type:"weapon",
+    className:"Đấu sĩ",
+    game:"Fantasy Arena",
+    price:350,
+    icon:"⚔️",
+    description:"Vũ khí ảo dành cho lớp Đấu sĩ."
+  },
+  {
+    id:2,
+    name:"Neon Hunter Bow",
+    type:"weapon",
+    className:"Xạ thủ",
+    game:"Fantasy Arena",
+    price:420,
+    icon:"🏹",
+    description:"Cung năng lượng ảo dành cho Xạ thủ."
+  },
+  {
+    id:3,
+    name:"Arcane Staff",
+    type:"weapon",
+    className:"Pháp sư",
+    game:"Fantasy Arena",
+    price:500,
+    icon:"🪄",
+    description:"Trượng phép ảo với thiết kế fantasy."
+  },
+  {
+    id:4,
+    name:"Titan Guard",
+    type:"weapon",
+    className:"Đỡ đòn",
+    game:"Fantasy Arena",
+    price:380,
+    icon:"🛡️",
+    description:"Trang bị phòng thủ ảo cho lớp Đỡ đòn."
+  },
+  {
+    id:5,
+    name:"Shadow Fang",
+    type:"weapon",
+    className:"Sát thủ",
+    game:"Fantasy Arena",
+    price:460,
+    icon:"🗡️",
+    description:"Vũ khí ảo dành cho lớp Sát thủ."
+  },
+  {
+    id:6,
+    name:"Genshin Explorer",
+    type:"account",
+    className:"Tài khoản game",
+    game:"Genshin Impact",
+    price:1200,
+    icon:"🌌",
+    description:"Tài khoản game mô phỏng dành cho trải nghiệm marketplace."
+  },
+  {
+    id:7,
+    name:"Open World Starter",
+    type:"account",
+    className:"Tài khoản game",
+    game:"Open World RPG",
+    price:850,
+    icon:"🌍",
+    description:"Tài khoản game mô phỏng thế giới mở."
+  },
+  {
+    id:8,
+    name:"Mystic Mage Pack",
+    type:"weapon",
+    className:"Pháp sư",
+    game:"Fantasy Arena",
+    price:620,
+    icon:"🔮",
+    description:"Bộ vật phẩm ảo phong cách pháp sư."
+  }
+];
+
+const DEMO_USERS = {
+  user:{
+    username:"user",
+    password:"1234",
+    role:"user",
+    display:"Ponta User",
+    balance:2500,
+    twoFA:false,
+    birthDate:"",
+    transactions:[]
+  },
+  manager:{
+    username:"manager",
+    password:"1234",
+    role:"manager",
+    display:"Ponta Manager",
+    balance:5000,
+    twoFA:true,
+    birthDate:"",
+    transactions:[]
+  },
+  support:{
+    username:"support",
+    password:"1234",
+    role:"support",
+    display:"Ponta Support",
+    balance:3000,
+    twoFA:true,
+    birthDate:"",
+    transactions:[]
+  },
+  owner:{
+    username:"owner",
+    password:"1234",
+    role:"owner",
+    display:"Ponta Owner",
+    balance:10000,
+    twoFA:true,
+    birthDate:"",
+    transactions:[]
+  }
+};
+
+let users = JSON.parse(localStorage.getItem("ponta_users") || "null");
+let products = JSON.parse(localStorage.getItem("ponta_products") || "null");
+let currentUser = null;
+
+if(!users){
+  users = DEMO_USERS;
+  saveUsers();
+}
+
+if(!products){
+  products = DEFAULT_PRODUCTS;
+  saveProducts();
+}
+
+function saveUsers(){
+  localStorage.setItem("ponta_users",JSON.stringify(users));
+}
+
+function saveProducts(){
+  localStorage.setItem("ponta_products",JSON.stringify(products));
+}
+
+function showToast(message){
+  const toast=document.getElementById("toast");
+  toast.textContent=message;
+  toast.classList.add("show");
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>toast.classList.remove("show"),2800);
+}
+
+function escapeHTML(str){
+  return String(str).replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+}
+
+/* AUTH */
+
+function demoLogin(role){
+  const u=users[role];
+  if(!u)return;
+
+  currentUser=u;
+  sessionStorage.setItem("ponta_current",u.username);
+  enterApp();
+}
+
+document.getElementById("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+
+  const username=document.getElementById("loginUser").value.trim();
+  const password=document.getElementById("loginPass").value;
+
+  const found=Object.values(users).find(u=>
+    u.username===username && u.password===password
+  );
+
+  if(!found){
+    showToast("Sai tên đăng nhập hoặc mật khẩu.");
+    return;
+  }
+
+  currentUser=found;
+  sessionStorage.setItem("ponta_current",found.username);
+  enterApp();
+});
+
+function enterApp(){
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("app").style.display="block";
+
+  updateUI();
+  renderProducts();
+  renderHistory();
+  renderAdmin();
+
+  showToast("Đăng nhập thành công!");
+}
+
+function logout(){
+  currentUser=null;
+  sessionStorage.removeItem("ponta_current");
+
+  document.getElementById("app").style.display="none";
+  document.getElementById("authScreen").classList.remove("hidden");
+
+  document.getElementById("loginForm").reset();
+}
+
+const savedUser=sessionStorage.getItem("ponta_current");
+
+if(savedUser){
+  const found=Object.values(users).find(u=>u.username===savedUser);
+  if(found){
+    currentUser=found;
+    enterApp();
+  }
+}
+
+/* NAVIGATION */
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+  const page=document.getElementById(id);
+  if(page)page.classList.add("active");
+
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+
+  const buttons=document.querySelectorAll(".nav-btn");
+  buttons.forEach(b=>{
+    if(b.getAttribute("onclick")?.includes(`'${id}'`)){
+      b.classList.add("active");
+    }
+  });
+
+  if(id==="history")renderHistory();
+  if(id==="admin")renderAdmin();
+}
+
+/* UI */
+
+function roleName(role){
+  return {
+    owner:"Chủ web",
+    manager:"Quản lý",
+    support:"Hỗ trợ viên",
+    user:"Người dùng"
+  }[role] || role;
+}
+
+function updateUI(){
+  if(!currentUser)return;
+
+  document.getElementById("headerUser").textContent=currentUser.display;
+  document.getElementById("headerBalance").textContent=
+    currentUser.balance.toLocaleString("vi-VN")+" P";
+
+  document.getElementById("walletBalance").textContent=
+    currentUser.balance.toLocaleString("vi-VN")+" P";
+
+  document.getElementById("statBalance").textContent=
+    currentUser.balance.toLocaleString("vi-VN")+" P";
+
+  document.getElementById("statProducts").textContent=products.length;
+
+  document.getElementById("statOrders").textContent=
+    currentUser.transactions.length;
+
+  document.getElementById("profileName").textContent=currentUser.display;
+  document.getElementById("profileRole").textContent=roleName(currentUser.role);
+
+  document.getElementById("profileAvatar").textContent=
+    currentUser.display.charAt(0).toUpperCase();
+
+  document.getElementById("birthDate").value=currentUser.birthDate || "";
+
+  const two=document.getElementById("twoFAButton");
+
+  if(currentUser.twoFA){
+    two.textContent="✓ Đang bật";
+    two.className="btn small success";
+  }else{
+    two.textContent="Đang tắt";
+    two.className="btn small";
+  }
+
+  const adminRoles=["owner","manager","support"];
+
+  document.getElementById("adminNav").style.display=
+    adminRoles.includes(currentUser.role) ? "block" : "none";
+}
+
+/* PRODUCTS */
+
+function productCard(p){
+  return `
+    <div class="product">
+      <div class="product-img">${p.icon}</div>
+      <div class="product-body">
+        <span class="badge">${escapeHTML(p.type==="weapon"?"Vật phẩm":"Tài khoản")}</span>
+        <h3>${escapeHTML(p.name)}</h3>
+        <p>${escapeHTML(p.game)} · ${escapeHTML(p.className)}</p>
+        <div class="price">${p.price.toLocaleString("vi-VN")} P</div>
+
+        <div class="product-actions">
+          <button class="btn small"
+            onclick="viewProduct(${p.id})">
+            Chi tiết
+          </button>
+
+          <button class="btn primary small"
+            onclick="buyProduct(${p.id})">
+            Mua
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProducts(){
+  const search=(document.getElementById("searchInput")?.value || "").toLowerCase();
+  const category=document.getElementById("categoryFilter")?.value || "all";
+
+  let list=products.filter(p=>{
+    const matchSearch=
+      p.name.toLowerCase().includes(search) ||
+      p.game.toLowerCase().includes(search) ||
+      p.className.toLowerCase().includes(search);
+
+    const matchCategory=
+      category==="all" || p.type===category;
+
+    return matchSearch && matchCategory;
+  });
+
+  document.getElementById("products").innerHTML=
+    list.length
+    ? list.map(productCard).join("")
+    : `<div class="empty" style="grid-column:1/-1">
+         Không tìm thấy sản phẩm phù hợp.
+       </div>`;
+
+  document.getElementById("featuredProducts").innerHTML=
+    products.slice(0,4).map(productCard).join("");
+}
+
+function viewProduct(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+
+  document.getElementById("modalTitle").textContent=p.name;
+
+  document.getElementById("modalProduct").innerHTML=`
+    <div style="text-align:center;font-size:90px;padding:15px">
+      ${p.icon}
+    </div>
+
+    <div class="panel" style="box-shadow:none">
+      <span class="badge">${p.type==="weapon"?"Vật phẩm ảo":"Tài khoản game"}</span>
+
+      <h2 style="margin:8px 0">${escapeHTML(p.name)}</h2>
+
+      <p class="muted" style="line-height:1.7">
+        ${escapeHTML(p.description)}
+      </p>
+
+      <div style="margin:18px 0;line-height:2">
+        <div>Game: <b>${escapeHTML(p.game)}</b></div>
+        <div>Phân loại: <b>${escapeHTML(p.className)}</b></div>
+        <div>Giá: <b style="color:#ffe26d">
+          ${p.price.toLocaleString("vi-VN")} P
+        </b></div>
+      </div>
+
+      <button class="btn primary" style="width:100%"
+        onclick="closeModal('productModal');buyProduct(${p.id})">
+        Mua sản phẩm
+      </button>
+    </div>
+  `;
+
+  document.getElementById("productModal").classList.add("open");
+}
+
+function buyProduct(id){
+  if(!currentUser)return;
+
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+
+  if(currentUser.balance<p.price){
+    showToast("Không đủ Ponta Coin để mua sản phẩm.");
+    return;
+  }
+
+  const now=new Date();
+
+  const transaction={
+    id:"PT-"+Date.now(),
+    productId:p.id,
+    productName:p.name,
+    productType:p.type,
+    game:p.game,
+    price:p.price,
+    time:now.toLocaleString("vi-VN")
+  };
+
+  currentUser.balance-=p.price;
+  currentUser.transactions.unshift(transaction);
+
+  users[currentUser.role===currentUser.username
+    ? currentUser.role
+    : currentUser.username] = currentUser;
+
+  /* Tìm đúng key của user */
+  const key=Object.keys(users).find(
+    k=>users[k].username===currentUser.username
+  );
+
+  if(key)users[key]=currentUser;
+
+  saveUsers();
+  updateUI();
+  renderHistory();
+
+  showReceipt(transaction);
+}
+
+/* RECEIPT */
+
+function showReceipt(t){
+  document.getElementById("modalTitle").textContent="Giao dịch hoàn tất";
+
+  document.getElementById("modalProduct").innerHTML=`
+    <div style="text-align:center;padding:15px">
+      <div style="
+        width:75px;height:75px;margin:auto;
+        display:grid;place-items:center;
+        border-radius:50%;
+        background:rgba(34,197,94,.12);
+        color:#5df18b;
+        font-size:38px">
+        ✓
+      </div>
+
+      <h2 style="margin:15px 0 7px">Đã hoàn thành giao dịch</h2>
+      <p class="muted">Mã giao dịch: ${escapeHTML(t.id)}</p>
+    </div>
+
+    <div class="panel" style="box-shadow:none;margin-top:20px;line-height:2">
+      <div>Sản phẩm:
+        <b>${escapeHTML(t.productName)}</b>
+      </div>
+
+      <div>Loại:
+        <b>${t.productType==="account"?"Tài khoản game":"Vật phẩm ảo"}</b>
+      </div>
+
+      <div>Game:
+        <b>${escapeHTML(t.game)}</b>
+      </div>
+
+      <div>Giá:
+        <b style="color:#ffe26d">
+          ${t.price.toLocaleString("vi-VN")} P
+        </b>
+      </div>
+
+      <div>Thời gian:
+        <b>${escapeHTML(t.time)}</b>
+      </div>
+    </div>
+
+    <div style="
+      margin-top:15px;
+      padding:12px;
+      color:#9ba8bd;
+      background:#0a0f17;
+      border-radius:10px;
+      font-size:12px">
+      Thông tin tài khoản game thật không được hiển thị trong
+      bản demo này để tránh lưu trữ thông tin đăng nhập nhạy cảm.
+    </div>
+
+    <button class="btn primary"
+      style="width:100%;margin-top:18px"
+      onclick="closeModal('productModal')">
+      Hoàn tất
+    </button>
+  `;
+
+  document.getElementById("productModal").classList.add("open");
+}
+
+/* HISTORY */
+
+function renderHistory(){
+  if(!currentUser)return;
+
+  if(!currentUser.transactions.length){
+    document.getElementById("historyTable").innerHTML=`
+      <div class="empty">
+        Bạn chưa có giao dịch nào.
+      </div>`;
+    return;
+  }
+
+  document.getElementById("historyTable").innerHTML=`
+    <table>
+      <thead>
+        <tr>
+          <th>Mã giao dịch</th>
+          <th>Sản phẩm</th>
+          <th>Loại</th>
+          <th>Giá</th>
+          <th>Thời gian</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        ${currentUser.transactions.map(t=>`
+          <tr>
+            <td>${escapeHTML(t.id)}</td>
+            <td>${escapeHTML(t.productName)}</td>
+            <td>${t.productType==="account"?"Tài khoản":"Vật phẩm"}</td>
+            <td style="color:#ffe26d">
+              ${t.price.toLocaleString("vi-VN")} P
+            </td>
+            <td>${escapeHTML(t.time)}</td>
+            <td><span class="status">Hoàn tất</span></td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+/* WALLET */
+
+function openTopup(){
+  document.getElementById("topupModal").classList.add("open");
+}
+
+function topup(){
+  const amount=Number(document.getElementById("topupAmount").value);
+
+  if(!amount || amount<=0){
+    showToast("Nhập số lượng Ponta Coin hợp lệ.");
+    return;
+  }
+
+  currentUser.balance+=amount;
+
+  const key=Object.keys(users).find(
+    k=>users[k].username===currentUser.username
+  );
+
+  if(key)users[key]=currentUser;
+
+  saveUsers();
+  updateUI();
+
+  closeModal("topupModal");
+
+  showToast(
+    `Đã cộng ${amount.toLocaleString("vi-VN")} P vào ví mô phỏng.`
+  );
+}
+
+/* ACCOUNT */
+
+function saveProfile(){
+  currentUser.birthDate=document.getElementById("birthDate").value;
+
+  const key=Object.keys(users).find(
+    k=>users[k].username===currentUser.username
+  );
+
+  if(key)users[key]=currentUser;
+
+  saveUsers();
+
+  showToast("Đã lưu thông tin tài khoản.");
+}
+
+function toggle2FA(){
+  currentUser.twoFA=!currentUser.twoFA;
+
+  const key=Object.keys(users).find(
+    k=>users[k].username===currentUser.username
+  );
+
+  if(key)users[key]=currentUser;
+
+  saveUsers();
+  updateUI();
+
+  showToast(
+    currentUser.twoFA
+    ? "Đã bật xác thực 2 bước mô phỏng."
+    : "Đã tắt xác thực 2 bước mô phỏng."
+  );
+}
+
+function changePassword(){
+  const oldPass=document.getElementById("oldPass").value;
+  const newPass=document.getElementById("newPass").value;
+  const confirm=document.getElementById("confirmPass").value;
+
+  if(oldPass!==currentUser.password){
+    showToast("Mật khẩu hiện tại không đúng.");
+    return;
+  }
+
+  if(newPass.length<4){
+    showToast("Mật khẩu mới cần ít nhất 4 ký tự trong bản demo.");
+    return;
+  }
+
+  if(newPass!==confirm){
+    showToast("Mật khẩu xác nhận không khớp.");
+    return;
+  }
+
+  currentUser.password=newPass;
+
+  const key=Object.keys(users).find(
+    k=>users[k].username===currentUser.username
+  );
+
+  if(key)users[key]=currentUser;
+
+  saveUsers();
+
+  document.getElementById("oldPass").value="";
+  document.getElementById("newPass").value="";
+  document.getElementById("confirmPass").value="";
+
+  showToast("Đã thay đổi mật khẩu.");
+}
+
+/* CHAT */
+
+function toggleChat(){
+  document.getElementById("chatBox").classList.toggle("open");
+}
+
+function sendMessage(){
+  const input=document.getElementById("chatInput");
+  const text=input.value.trim();
+
+  if(!text)return;
+
+  const messages=document.getElementById("chatMessages");
+
+  messages.innerHTML+=`
+    <div class="message me">${escapeHTML(text)}</div>
+  `;
+
+  input.value="";
+  messages.scrollTop=messages.scrollHeight;
+
+  setTimeout(()=>{
+    messages.innerHTML+=`
+      <div class="message support">
+        Cảm ơn bạn! Đây là phản hồi mô phỏng của Ponta Support.
+      </div>
+    `;
+
+    messages.scrollTop=messages.scrollHeight;
+  },700);
+}
+
+document.getElementById("chatInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter")sendMessage();
+});
+
+/* ADMIN */
+
+function canManageProducts(){
+  return ["owner","manager"].includes(currentUser.role);
+}
+
+function renderAdmin(){
+  const container=document.getElementById("adminContent");
+
+  if(!currentUser || !["owner","manager","support"].includes(currentUser.role)){
+    container.innerHTML=`
+      <div class="panel">
+        <h3>Không có quyền truy cập</h3>
+        <p class="muted" style="margin-top:8px">
+          Khu vực này dành cho Owner, Manager và Support Staff.
+        </p>
+      </div>`;
+    return;
+  }
+
+  let html=`
+    <div class="grid-2">
+      <div class="panel admin-card">
+        <p class="muted">Vai trò hiện tại</p>
+        <h2 style="margin-top:7px">${roleName(currentUser.role)}</h2>
+      </div>
+
+      <div class="panel admin-card">
+        <p class="muted">Tổng sản phẩm</p>
+        <h2 style="margin-top:7px">${products.length}</h2>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Phân quyền hệ thống</h2>
+    </div>
+
+    <div class="role-grid">
+      <div class="role-item">
+        <strong>👑 Chủ web</strong>
+        <small>Toàn quyền quyết định và quản trị hệ thống.</small>
+      </div>
+
+      <div class="role-item">
+        <strong>🛠️ Quản lý</strong>
+        <small>Đăng sản phẩm, quản lý sản phẩm và xem giao dịch.</small>
+      </div>
+
+      <div class="role-item">
+        <strong>💬 Hỗ trợ viên</strong>
+        <small>Tập trung hỗ trợ và chat với người dùng.</small>
+      </div>
+
+      <div class="role-item">
+        <strong>👤 Người dùng</strong>
+        <small>Mua sản phẩm, quản lý ví và lịch sử.</small>
+      </div>
+    </div>
+  `;
+
+  if(canManageProducts()){
+    html+=`
+      <div class="section-head">
+        <h2>Quản lý sản phẩm</h2>
+      </div>
+
+      <div class="panel">
+        <form onsubmit="addProduct(event)">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Tên sản phẩm</label>
+              <input id="newName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Game</label>
+              <input id="newGame" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Loại</label>
+              <select id="newType" class="form-control">
+                <option value="weapon">Vật phẩm</option>
+                <option value="account">Tài khoản</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Phân loại</label>
+              <input id="newClass" class="form-control"
+                     placeholder="Ví dụ: Pháp sư">
+            </div>
+
+            <div class="form-group">
+              <label>Giá Ponta Coin</label>
+              <input id="newPrice" type="number"
+                     min="1" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Icon</label>
+              <input id="newIcon" class="form-control"
+                     value="🎮">
+            </div>
+          </div>
+
+          <button class="btn primary">+ Đăng sản phẩm</button>
+        </form>
+      </div>
+
+      <div class="section-head">
+        <h2>Sản phẩm đang đăng</h2>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Sản phẩm</th>
+                <th>Game</th>
+                <th>Loại</th>
+                <th>Giá</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${products.map(p=>`
+                <tr>
+                  <td>${p.icon} ${escapeHTML(p.name)}</td>
+                  <td>${escapeHTML(p.game)}</td>
+                  <td>${p.type==="weapon"?"Vật phẩm":"Tài khoản"}</td>
+                  <td style="color:#ffe26d">
+                    ${p.price.toLocaleString("vi-VN")} P
+                  </td>
+                  <td>
+                    <button class="btn danger small"
+                      onclick="deleteProduct(${p.id})">
+                      Xóa
+                    </button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  if(["owner","manager"].includes(currentUser.role)){
+    html+=`
+      <div class="section-head">
+        <h2>Lịch sử giao dịch hệ thống</h2>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Thời gian</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${allTransactionsHTML()}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML=html;
+}
+
+function addProduct(e){
+  e.preventDefault();
+
+  if(!canManageProducts())return;
+
+  const p={
+    id:Date.now(),
+    name:document.getElementById("newName").value,
+    game:document.getElementById("newGame").value,
+    type:document.getElementById("newType").value,
+    className:document.getElementById("newClass").value || "Tổng hợp",
+    price:Number(document.getElementById("newPrice").value),
+    icon:document.getElementById("newIcon").value || "🎮",
+    description:"Sản phẩm được thêm từ Admin Dashboard."
+  };
+
+  products.push(p);
+  saveProducts();
+
+  renderProducts();
+  renderAdmin();
+
+  showToast("Đã đăng sản phẩm mới.");
+}
+
+function deleteProduct(id){
+  if(!canManageProducts())return;
+
+  products=products.filter(p=>p.id!==id);
+  saveProducts();
+
+  renderProducts();
+  renderAdmin();
+
+  showToast("Đã xóa sản phẩm.");
+}
+
+function allTransactionsHTML(){
+  const rows=[];
+
+  Object.values(users).forEach(u=>{
+    u.transactions.forEach(t=>{
+      rows.push({
+        user:u.username,
+        ...t
+      });
+    });
+  });
+
+  rows.sort((a,b)=>b.id.localeCompare(a.id));
+
+  if(!rows.length){
+    return `
+      <tr>
+        <td colspan="4" class="muted">
+          Chưa có giao dịch.
+        </td>
+      </tr>`;
+  }
+
+  return rows.map(t=>`
+    <tr>
+      <td>${escapeHTML(t.user)}</td>
+      <td>${escapeHTML(t.productName)}</td>
+      <td style="color:#ffe26d">
+        ${t.price.toLocaleString("vi-VN")} P
+      </td>
+      <td>${escapeHTML(t.time)}</td>
+    </tr>
+  `).join("");
+}
+
+/* MODALS */
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("open");
+}
+
+document.querySelectorAll(".modal").forEach(modal=>{
+  modal.addEventListener("click",e=>{
+    if(e.target===modal){
+      modal.classList.remove("open");
+    }
+  });
+});
+
+/* INITIAL RENDER */
+renderProducts();
+
+</script>
+
+</body>
+</html>
